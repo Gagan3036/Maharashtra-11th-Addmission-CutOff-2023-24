@@ -93,14 +93,14 @@ city = f'{city_selected}'
 def round(a, city):
     return f'{city}/{city}_CutOff_Round{a}.xlsx'
 round_paths = {
-    'Regular Round 3': path+round(3, city),
-    'Special Round 1': path+round(4, city),
-    'Special Round 2': path+round(5, city),
-    'Special Round 3': path+round(6, city),
-    'Special Round 4': path+round(7, city),
-    'Special Round 5': path+round(8, city),
-    'Special Round 6': path+round(9, city),
-    'Special Round 7': path+round(10, city)
+    'Regular Round 3': round(3, city),
+    'Special Round 1': round(4, city),
+    'Special Round 2': round(5, city),
+    'Special Round 3': round(6, city),
+    'Special Round 4': round(7, city),
+    'Special Round 5': round(8, city),
+    'Special Round 6': round(9, city),
+    'Special Round 7': round(10, city)
 }
 
 round_selected = st.selectbox('Select Round', list(round_paths.keys()))
