@@ -3,7 +3,7 @@ import pandas as pd
 import io
 
 # File path for Excel data
-path = 'Maharashtra-11th-Addmission-CutOff-2023-24'
+path = 'Maharashtra-11th-Addmission-CutOff-2023-24/'
 
 # List of available streams, reservation details, categories, statuses, college types, and mediums
 streams = ['Arts', 'Commerce', 'Science','HSVC - Accounting and Office Management','HSVC - Electronics Technology',
