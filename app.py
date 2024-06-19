@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import io
+import os
 
 # File path for Excel data
 path = 'Maharashtra-11th-Addmission-CutOff-2023-24/'
@@ -90,17 +91,17 @@ stream_selected = st.selectbox('Select Stream', streams)
 city = f'{city_selected}'
 
 # Dictionary to map round numbers to their respective file paths
-def round(a, city):
-    return f'{city}/{city}_CutOff_Round{a}.xlsx'
+def round_path(a, city):
+    return os.path.join(path, city, f'{city}_CutOff_Round{a}.xlsx')
 round_paths = {
-    'Regular Round 3': round(3, city),
-    'Special Round 1': round(4, city),
-    'Special Round 2': round(5, city),
-    'Special Round 3': round(6, city),
-    'Special Round 4': round(7, city),
-    'Special Round 5': round(8, city),
-    'Special Round 6': round(9, city),
-    'Special Round 7': round(10, city)
+    'Regular Round 3': round_path(3, city),
+    'Special Round 1': round_path(4, city),
+    'Special Round 2': round_path(5, city),
+    'Special Round 3': round_path(6, city),
+    'Special Round 4': round_path(7, city),
+    'Special Round 5': round_path(8, city),
+    'Special Round 6': round_path(9, city),
+    'Special Round 7': round_path(10, city)
 }
 
 round_selected = st.selectbox('Select Round', list(round_paths.keys()))
