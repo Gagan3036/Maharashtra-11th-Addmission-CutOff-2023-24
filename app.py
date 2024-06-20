@@ -3,17 +3,6 @@ import pandas as pd
 import io
 import os
 
-'''
-# Path for local host
-path = r'C:\Users\gagan\Desktop\PlayGround\Maharashtra 11th Addmission CutOff 2023-24'
-
-
-# Dictionary to map round numbers to their respective file paths in local host
-def round_path(a, city):
-    return f'{path}/{city}/{city}_CutOff_Round{a}.xlsx'
-
-'''
-
 # Dictionary to map round numbers to their respective file paths in global host
 def round_path(a, city):
     return f'{city}/{city}_CutOff_Round{a}.xlsx'
