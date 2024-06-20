@@ -109,14 +109,6 @@ status_selected = st.selectbox('Select Status', statuses)
 college_type_selected = st.selectbox('Select College Type', college_types)
 medium_selected = st.selectbox('Select Medium', mediums)
 
-# Debug: Print working directory and list files
-st.write("Current working directory:", os.getcwd())
-st.write("Files in current directory:", os.listdir('.'))
-
-for city in citys:
-    city_path = os.path.join('.', city)
-    if os.path.exists(city_path):
-        st.write(f"Files in {city}:", os.listdir(city_path))
 
 # Function to load data based on user inputs
 def load_data(marks, stream, round_selected, reservation_selected, category_selected, status_selected, college_type_selected, medium_selected):
