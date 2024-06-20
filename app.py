@@ -24,6 +24,18 @@ college_types = ['Co-Ed', 'Girls', 'Boys']
 mediums = ['English', 'Marathi', 'Urdu', 'Hindi', 'Gujarati']
 citys = ['Mumbai', 'Pune', 'Nashik', 'Nagpur', 'Amravati']
 
+# Define round_mapping globally
+round_mapping = {
+    'Regular Round 3': 3,
+    'Special Round 1': 4,
+    'Special Round 2': 5,
+    'Special Round 3': 6,
+    'Special Round 4': 7,
+    'Special Round 5': 8,
+    'Special Round 6': 9,
+    'Special Round 7': 10
+}
+
 # Streamlit web app
 st.title('Maharashtra 11th Admission Cutoff Search 2024')
 
@@ -82,16 +94,6 @@ st.markdown(
 # Function to load data based on user inputs
 @st.cache(suppress_st_warning=True)
 def load_data(round_selected, city_selected):
-    round_mapping = {
-        'Regular Round 3': 3,
-        'Special Round 1': 4,
-        'Special Round 2': 5,
-        'Special Round 3': 6,
-        'Special Round 4': 7,
-        'Special Round 5': 8,
-        'Special Round 6': 9,
-        'Special Round 7': 10
-    }
     round_number = round_mapping[round_selected]
     path = f'{city_selected}/{city_selected}_CutOff_Round{round_number}.xlsx'
     df = pd.read_excel(path)
