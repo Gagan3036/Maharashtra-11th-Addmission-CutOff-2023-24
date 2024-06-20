@@ -3,9 +3,6 @@ import pandas as pd
 import io
 import os
 
-# File path for Excel data
-path = 'Maharashtra-11th-Addmission-CutOff-2023-24/'
-
 # List of available streams, reservation details, categories, statuses, college types, and mediums
 streams = ['Arts', 'Commerce', 'Science', 'HSVC - Accounting and Office Management', 'HSVC - Electronics Technology',
            'HSVC - Medical Lab Technician', 'HSVC - Electrical Technology', 'HSVC - Banking Financial Services and Insurance',
@@ -92,7 +89,8 @@ city = f'{city_selected}'
 
 # Dictionary to map round numbers to their respective file paths
 def round_path(a, city):
-    return os.path.join(path, city, f'{city}_CutOff_Round{a}.xlsx')
+    return os.path.join(city, f'{city}_CutOff_Round{a}.xlsx')
+
 round_paths = {
     'Regular Round 3': round_path(3, city),
     'Special Round 1': round_path(4, city),
@@ -114,7 +112,11 @@ medium_selected = st.selectbox('Select Medium', mediums)
 # Debug: Print working directory and list files
 st.write("Current working directory:", os.getcwd())
 st.write("Files in current directory:", os.listdir('.'))
-st.write("Files in Maharashtra-11th-Addmission-CutOff-2023-24/Mumbai:", os.listdir('Maharashtra-11th-Addmission-CutOff-2023-24/Mumbai'))
+
+for city in citys:
+    city_path = os.path.join('.', city)
+    if os.path.exists(city_path):
+        st.write(f"Files in {city}:", os.listdir(city_path))
 
 # Function to load data based on user inputs
 def load_data(marks, stream, round_selected, reservation_selected, category_selected, status_selected, college_type_selected, medium_selected):
