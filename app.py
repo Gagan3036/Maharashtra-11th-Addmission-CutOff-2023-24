@@ -89,7 +89,7 @@ city = f'{city_selected}'
 
 # Dictionary to map round numbers to their respective file paths
 def round_path(a, city):
-    return os.path.join(city, f'{city}_CutOff_Round{a}.xlsx')
+    return f'{city}/{city}_CutOff_Round{a}.xlsx'
 
 round_paths = {
     'Regular Round 3': round_path(3, city),
