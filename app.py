@@ -3,11 +3,6 @@ import pandas as pd
 import io
 import os
 
-# Dictionary to map round numbers to their respective file paths in global host
-def round_path(a, city):
-    return f'{city}/{city}_CutOff_Round{a}.xlsx'
-
-
 # List of available streams, reservation details, categories, statuses, college types, and mediums
 streams = ['Arts', 'Commerce', 'Science', 'HSVC - Accounting and Office Management', 'HSVC - Electronics Technology',
            'HSVC - Medical Lab Technician', 'HSVC - Electrical Technology', 'HSVC - Banking Financial Services and Insurance',
@@ -92,6 +87,10 @@ stream_selected = st.selectbox('Select Stream', streams)
 # Assign city
 city = f'{city_selected}'
 
+# Dictionary to map round numbers to their respective file paths
+def round_path(a, city):
+    return f'{city}/{city}_CutOff_Round{a}.xlsx'
+
 round_paths = {
     'Regular Round 3': round_path(3, city),
     'Special Round 1': round_path(4, city),
@@ -153,7 +152,7 @@ if st.button('Search'):
     filtered_df.index += 1  # Adding 1 to start index from 1 for serial number
 
     # Displaying subheader with appropriate message
-    st.subheader(f"{len(filtered_df)} Colleges Found In {city_selected} According To Your Selection:")
+    st.subheader(f'{len(filtered_df)} Colleges Found In {city_selected} According To Your Selection:')
     if filtered_df.empty:
         st.write('No colleges found matching the criteria.')
     else:
@@ -186,5 +185,3 @@ if st.button('Twitter'):
     st.markdown('[Gagan Prajapati on Twitter](https://twitter.com/Gagan3036)')
 if st.button('GitHub'):
     st.markdown('[Gagan Prajapati on GitHub](https://github.com/Gagan3036)')
-
-st.write('If you are facing any issues feel free to contact')
