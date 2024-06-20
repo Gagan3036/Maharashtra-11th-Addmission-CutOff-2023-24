@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import io
+import os
 
 # List of available streams, reservation details, categories, statuses, college types, and mediums
 streams = ['Arts', 'Commerce', 'Science', 'HSVC - Accounting and Office Management', 'HSVC - Electronics Technology',
@@ -23,18 +24,6 @@ statuses = ['All', 'Self Finance', 'Aided', 'Un-Aided', 'Partially Aided (20%-80
 college_types = ['Co-Ed', 'Girls', 'Boys']
 mediums = ['English', 'Marathi', 'Urdu', 'Hindi', 'Gujarati']
 citys = ['Mumbai', 'Pune', 'Nashik', 'Nagpur', 'Amravati']
-
-# Define round_mapping globally
-round_mapping = {
-    'Regular Round 3': 3,
-    'Special Round 1': 4,
-    'Special Round 2': 5,
-    'Special Round 3': 6,
-    'Special Round 4': 7,
-    'Special Round 5': 8,
-    'Special Round 6': 9,
-    'Special Round 7': 10
-}
 
 # Streamlit web app
 st.title('Maharashtra 11th Admission Cutoff Search 2024')
@@ -91,29 +80,40 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Function to load data based on user inputs
-@st.cache(suppress_st_warning=True)
-def load_data(round_selected, city_selected):
-    round_number = round_mapping[round_selected]
-    path = f'{city_selected}/{city_selected}_CutOff_Round{round_number}.xlsx'
-    df = pd.read_excel(path)
-    return df
-
 # Sidebar widgets for user inputs
 city_selected = st.selectbox('Select City', citys, index=0)  # Set index=0 for no default selection
 marks = st.number_input('Enter Marks Out Of 500', min_value=0, max_value=500, step=1)
 stream_selected = st.selectbox('Select Stream', streams)
-round_selected = st.selectbox('Select Round', list(round_mapping.keys()))
+# Assign city
+city = f'{city_selected}'
+
+# Dictionary to map round numbers to their respective file paths
+def round_path(a, city):
+    return f'{city}/{city}_CutOff_Round{a}.xlsx'
+
+round_paths = {
+    'Regular Round 3': round_path(3, city),
+    'Special Round 1': round_path(4, city),
+    'Special Round 2': round_path(5, city),
+    'Special Round 3': round_path(6, city),
+    'Special Round 4': round_path(7, city),
+    'Special Round 5': round_path(8, city),
+    'Special Round 6': round_path(9, city),
+    'Special Round 7': round_path(10, city)
+}
+
+round_selected = st.selectbox('Select Round', list(round_paths.keys()))
 reservation_selected = st.selectbox('Select Reservation Details', reservations)
 category_selected = st.multiselect('Select Categories', categories)
 status_selected = st.selectbox('Select Status', statuses)
 college_type_selected = st.selectbox('Select College Type', college_types)
 medium_selected = st.selectbox('Select Medium', mediums)
 
-# Display the filtered results
-if st.button('Search'):
-    with st.spinner('Loading data...'):
-        df = load_data(round_selected, city_selected)
+# Function to load data based on user inputs
+def load_data(marks, stream, round_selected, reservation_selected, category_selected, status_selected, college_type_selected, medium_selected):
+    round_path = round_paths[round_selected]
+    st.write(f"Loading data from: {round_path}")  # Debug: Print the file path being loaded
+    df = pd.read_excel(round_path)
     
     # Convert relevant columns to numeric, handling errors gracefully
     for col in category_selected:
@@ -141,12 +141,23 @@ if st.button('Search'):
     # Select unique columns for display
     display_columns = ['CollegeName'] + category_selected + ['Status', 'CollegeType', 'Medium']
     
-    # Display the filtered results
+    return filtered_df[display_columns]
+
+# Display the filtered results
+if st.button('Search'):
+    with st.spinner('Loading data it may take 1-2 min...'):
+        filtered_df = load_data(marks, stream_selected, round_selected, reservation_selected, category_selected, status_selected, college_type_selected, medium_selected)
+    
+    # Resetting index to add a serial number column
+    filtered_df.reset_index(drop=True, inplace=True)
+    filtered_df.index += 1  # Adding 1 to start index from 1 for serial number
+
+    # Displaying subheader with appropriate message
     st.subheader(f'{len(filtered_df)} Colleges in {city_selected} for {stream_selected} stream with cutoff less than or equal to {marks} in {round_selected}:')
     if filtered_df.empty:
         st.write('No colleges found matching the criteria.')
     else:
-        st.dataframe(filtered_df[display_columns], width=None)  # Displaying dataframe without index column
+        st.dataframe(filtered_df, width=None)  # Displaying dataframe without index column
 
         # Create a downloadable Excel file
         output = io.BytesIO()
