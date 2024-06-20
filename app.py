@@ -110,9 +110,9 @@ college_type_selected = st.selectbox('Select College Type', college_types)
 medium_selected = st.selectbox('Select Medium', mediums)
 
 # Function to load data based on user inputs
-def load_data(marks, stream, round_selected, reservation_selected, category_selected, status_selected, college_type_selected, medium_selected):
+def load_data(marks, stream_selected, round_selected, reservation_selected, category_selected, status_selected, college_type_selected, medium_selected):
     round_path = round_paths[round_selected]
-    st.write(f"Loading data from: {round_path}")  # Debug: Print the file path being loaded
+    st.write(f"Loading...")  # Print the file being loaded
     df = pd.read_excel(round_path)
     
     # Convert relevant columns to numeric, handling errors gracefully
@@ -139,13 +139,13 @@ def load_data(marks, stream, round_selected, reservation_selected, category_sele
         ]
 
     # Select unique columns for display
-    display_columns = ['CollegeName'] + category_selected + ['Status', 'CollegeType', 'Medium']
+    display_columns = ['CollegeName'] + category_selected + ['Status', 'CollegeType', 'Medium','Stream']
     
     return filtered_df[display_columns]
 
 # Display the filtered results
 if st.button('Search'):
-    with st.spinner('Loading data it may take 1-2 min...'):
+    with st.spinner('Loading data it may take 1 min...'):
         filtered_df = load_data(marks, stream_selected, round_selected, reservation_selected, category_selected, status_selected, college_type_selected, medium_selected)
     
     # Resetting index to add a serial number column
