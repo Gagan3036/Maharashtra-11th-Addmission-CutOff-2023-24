@@ -7,12 +7,12 @@ import os
 path = 'Maharashtra-11th-Addmission-CutOff-2023-24/'
 
 # List of available streams, reservation details, categories, statuses, college types, and mediums
-streams = ['Arts', 'Commerce', 'Science','HSVC - Accounting and Office Management','HSVC - Electronics Technology',
-           'HSVC - Medical Lab Technician','HSVC - Electrical Technology','HSVC - Banking Financial Services and Insurance',
-           'HSVC - Computer Technology','HSVC - Construction Technology','HSVC - Marketing and Retails Management',
-           'HSVC - Mechanical Technology','HSVC - Automobile Technology','HSVC - Tourism Hospitality Management',
-           'HSVC - Logistic and Supply Chain Management','HSVC - Child, Old age And Health Card Services',
-           'HSVC - Catering and Food Product Technology','HSVC - Radiology Technician','HSVC - Fisheries Technology']
+streams = ['Arts', 'Commerce', 'Science', 'HSVC - Accounting and Office Management', 'HSVC - Electronics Technology',
+           'HSVC - Medical Lab Technician', 'HSVC - Electrical Technology', 'HSVC - Banking Financial Services and Insurance',
+           'HSVC - Computer Technology', 'HSVC - Construction Technology', 'HSVC - Marketing and Retails Management',
+           'HSVC - Mechanical Technology', 'HSVC - Automobile Technology', 'HSVC - Tourism Hospitality Management',
+           'HSVC - Logistic and Supply Chain Management', 'HSVC - Child, Old age And Health Card Services',
+           'HSVC - Catering and Food Product Technology', 'HSVC - Radiology Technician', 'HSVC - Fisheries Technology']
 reservations = [
     'Pure',
     'Trf. / Ex.Sr. / Ser/SPORTS (5%)',
@@ -26,7 +26,7 @@ categories = ['SC', 'ST', 'VJ-A', 'NT-B', 'NT-C', 'NT-D', 'OBC', 'SBC', 'EWS', '
 statuses = ['All', 'Self Finance', 'Aided', 'Un-Aided', 'Partially Aided (20%-80%)', 'Government', 'B.M.C.']
 college_types = ['Co-Ed', 'Girls', 'Boys']
 mediums = ['English', 'Marathi', 'Urdu', 'Hindi', 'Gujarati']
-citys = ['Mumbai','Pune','Nashik','Nagpur','Amravati']
+citys = ['Mumbai', 'Pune', 'Nashik', 'Nagpur', 'Amravati']
 
 # Streamlit web app
 st.title('Maharashtra 11th Admission Cutoff Search 2024')
@@ -111,9 +111,15 @@ status_selected = st.selectbox('Select Status', statuses)
 college_type_selected = st.selectbox('Select College Type', college_types)
 medium_selected = st.selectbox('Select Medium', mediums)
 
+# Debug: Print working directory and list files
+st.write("Current working directory:", os.getcwd())
+st.write("Files in current directory:", os.listdir('.'))
+st.write("Files in Maharashtra-11th-Addmission-CutOff-2023-24/Mumbai:", os.listdir('Maharashtra-11th-Addmission-CutOff-2023-24/Mumbai'))
+
 # Function to load data based on user inputs
 def load_data(marks, stream, round_selected, reservation_selected, category_selected, status_selected, college_type_selected, medium_selected):
     round_path = round_paths[round_selected]
+    st.write(f"Loading data from: {round_path}")  # Debug: Print the file path being loaded
     df = pd.read_excel(round_path)
     
     # Convert relevant columns to numeric, handling errors gracefully
