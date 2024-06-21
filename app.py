@@ -40,7 +40,7 @@ st.markdown(
         color: #4CAF50;
     }
     .stApp h1, .stApp h2, .stApp h3, .stApp h4, .stApp h5, .stApp h6, .stApp p, .stApp div, .stApp span, .stApp a, .stApp label {
-        color: #FFF6E9;
+        color: #FFBF00;
     }
     .stApp .css-1d391kg {  /* stButton */
         background-color: #2196F3;
