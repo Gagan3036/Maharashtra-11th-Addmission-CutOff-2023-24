@@ -112,6 +112,10 @@ medium_selected = st.selectbox('Select Medium', mediums)
 # Function to load data based on user inputs
 def load_data(marks, stream_selected, round_selected, reservation_selected, category_selected, status_selected, college_type_selected, medium_selected):
     round_path = round_paths[round_selected]
+    if not os.path.exists(round_path):
+        st.error(f"File not found try for another rounds")
+        return pd.DataFrame()  # Return an empty DataFrame if the file is not found
+    
     df = pd.read_excel(round_path)
     
     # Convert relevant columns to numeric, handling errors gracefully
